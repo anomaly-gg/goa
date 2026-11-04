@@ -36,6 +36,7 @@ function render() {
   const active = r && (r.status === 'pending' || r.status === 'approved' || r.status === 'declined');
   if (st.blocked) return status('🚫', 'Requests are off', 'Message the owner if you think this is a mistake.', null);
   if (active) return status(...statusText(r), r);
+  if (!st.open) return status('🔒', 'Requests are closed for tonight', `Overnight requests close at ${st.closesAt}. You can request again from ${st.opensAt}.`, null);
   if (!st.canRequest) return status('🌙', "You've used tonight's requests", 'Message the owner, or try again tomorrow.', null);
   showForm();
 }
@@ -78,7 +79,7 @@ function syncRows() {
   $('#f-send').textContent = rows.length > 1 ? `REQUEST OVERNIGHT (${rows.length} PCs)` : 'REQUEST OVERNIGHT';
 }
 function showForm() {
-  $('#f-night').textContent = `For tonight, ${st.nightLabel}. The owner gets your request right away.`;
+  $('#f-night').textContent = `For tonight, ${st.nightLabel}. Request before ${st.closesAt} — the owner gets it right away.`;
   if (!$('#f-users').children.length) { $('#f-users').append(userRow(st.username)); }
   syncRows();
   show('#v-form');

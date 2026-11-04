@@ -50,7 +50,7 @@ function render() {
   $('#v-key').classList.add('hidden'); $('#v-list').classList.remove('hidden');
   const isToday = data.night === today;
   $('#n-label').textContent = (isToday ? 'Tonight · ' : '') + data.nightLabel;
-  $('#n-sub').textContent = isToday ? 'resets 6 AM' : 'past night';
+  $('#n-sub').textContent = isToday ? (data.open ? `requests open · close ${data.closesAt}` : `requests closed · reopen ${data.opensAt}`) : 'past night';
   $('#n-next').disabled = isToday;
   $('#add-card').classList.toggle('hidden', !isToday);
 
