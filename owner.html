@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0f14">
+<meta name="robots" content="noindex">
+<title>Owner · Overnight Requests</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<main>
+  <header class="brand">
+    <div class="logo">NETPIX GAMING CAFE</div>
+    <div class="sub">🔑 Owner · overnight requests</div>
+  </header>
+
+  <section id="v-key" class="card hidden">
+    <h2>Owner key</h2>
+    <p class="dim">Paste your owner key once. This phone will remember it.</p>
+    <form id="f-key">
+      <input id="k-in" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="owner key">
+      <div class="err" id="k-err"></div>
+      <button class="btn-main" type="submit">UNLOCK</button>
+    </form>
+  </section>
+
+  <section id="v-list" class="hidden">
+    <div class="card" style="padding:12px 14px">
+      <div class="row" style="justify-content:space-between">
+        <button class="btn-ghost" id="n-prev" aria-label="Previous night">◀</button>
+        <div style="text-align:center"><div id="n-label" style="font-weight:800"></div><div class="dim small" id="n-sub"></div></div>
+        <button class="btn-ghost" id="n-next" aria-label="Next night">▶</button>
+      </div>
+    </div>
+    <div class="tabs">
+      <button data-tab="pending" class="on">Waiting <span id="c-pending"></span></button>
+      <button data-tab="approved">Approved <span id="c-approved"></span></button>
+      <button data-tab="other">Other <span id="c-other"></span></button>
+    </div>
+    <div id="list"></div>
+
+    <details class="card" id="add-card">
+      <summary style="cursor:pointer;font-weight:700">+ Add someone yourself</summary>
+      <p class="dim">For people with no phone. Goes straight to Approved for tonight.</p>
+      <form id="f-add">
+        <label for="a-name">Name</label>
+        <input id="a-name" maxlength="40">
+        <label for="a-users">Cafe usernames</label>
+        <input id="a-users" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="separate with spaces or commas">
+        <div class="err" id="a-err"></div>
+        <button class="btn-main" type="submit">ADD AS APPROVED</button>
+      </form>
+    </details>
+  </section>
+  <p class="err" id="g-err" style="text-align:center"></p>
+</main>
+<script type="module" src="js/owner.js"></script>
+</body>
+</html>

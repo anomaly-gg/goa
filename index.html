@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0f14">
+<title>Overnight Request · NETPIX GAMING CAFE</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<main>
+  <header class="brand">
+    <div class="logo">NETPIX GAMING CAFE</div>
+    <div class="sub">🌙 Overnight request</div>
+  </header>
+
+  <!-- 1. first visit -->
+  <section id="v-register" class="card hidden">
+    <h2>Request overnight from home</h2>
+    <p class="dim">Overnight is by approval only. Ask here instead of messaging the owner — you'll see the answer on this page.</p>
+    <form id="f-register">
+      <label for="r-name">Your name</label>
+      <input id="r-name" autocomplete="name" maxlength="40" placeholder="e.g. Michael">
+      <label for="r-user">Your cafe username</label>
+      <input id="r-user" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="32" placeholder="e.g. michael23">
+      <div class="hint">Type it exactly like you log in at the cafe.</div>
+      <div class="err" id="r-err"></div>
+      <button class="btn-main" type="submit">CONTINUE</button>
+    </form>
+  </section>
+
+  <!-- 2. make a request -->
+  <section id="v-form" class="card hidden">
+    <h2>Overnight tonight</h2>
+    <p class="dim" id="f-night"></p>
+    <form id="f-request">
+      <label>Who's playing? <span class="small">(one cafe username per PC)</span></label>
+      <div id="f-users"></div>
+      <button type="button" class="add" id="f-add">+ Add a friend</button>
+      <div class="hint">Friends don't need the app — just type their cafe username exactly.</div>
+      <div class="err" id="f-err"></div>
+      <button class="btn-main" type="submit" id="f-send">REQUEST OVERNIGHT</button>
+    </form>
+  </section>
+
+  <!-- 3. status -->
+  <section id="v-status" class="card status hidden">
+    <div class="big" id="s-icon"></div>
+    <h2 id="s-title"></h2>
+    <p class="dim" id="s-sub"></p>
+    <div class="note hidden" id="s-note"></div>
+    <div class="chips" id="s-users"></div>
+    <div class="foot"><button class="link hidden" id="s-cancel">Cancel request</button></div>
+  </section>
+
+  <!-- profile edit -->
+  <section id="v-profile" class="card hidden">
+    <h2>Your details</h2>
+    <form id="f-profile">
+      <label for="p-name">Your name</label>
+      <input id="p-name" maxlength="40">
+      <label for="p-user">Your cafe username</label>
+      <input id="p-user" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="32">
+      <div class="err" id="p-err"></div>
+      <button class="btn-main" type="submit">SAVE</button>
+      <button class="btn-ghost" type="button" id="p-back" style="width:100%;margin-top:8px">Back</button>
+    </form>
+  </section>
+
+  <div class="who hidden" id="who">
+    <span id="who-text"></span>
+    <button class="link" id="who-edit">Edit</button>
+  </div>
+  <p class="err" id="g-err" style="text-align:center"></p>
+</main>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
