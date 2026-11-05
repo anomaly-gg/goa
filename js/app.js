@@ -1,6 +1,7 @@
 // Customer page: register once -> request overnight -> watch the answer.
 import { call, $, esc } from './api.js';
 import './pwa.js';
+import { attachCheck } from './usercheck.js';
 
 const TOKEN_KEY = 'cr_token';
 let token = localStorage.getItem(TOKEN_KEY) || '';
@@ -64,14 +65,14 @@ function status(icon, title, sub, r) {
 
 // ---------------- request form ----------------
 function userRow(value = '') {
-  const row = document.createElement('div');
-  row.className = 'row';
-  row.style.marginBottom = '8px';
-  row.innerHTML = `<input class="u" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="32" placeholder="friend's cafe username">
-                   <button type="button" class="x" aria-label="Remove">✕</button>`;
-  row.querySelector('input').value = value;
-  row.querySelector('.x').onclick = () => { row.remove(); syncRows(); };
-  return row;
+  const wrap = document.createElement('div');
+  wrap.style.marginBottom = '8px';
+  wrap.innerHTML = `<div class="row"><input class="u" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="64" placeholder="friend's cafe username">
+                   <button type="button" class="x" aria-label="Remove">✕</button></div><div class="ucheck"></div>`;
+  wrap.querySelector('input').value = value;
+  wrap.querySelector('.x').onclick = () => { wrap.remove(); syncRows(); };
+  attachCheck(wrap.querySelector('input'), wrap.querySelector('.ucheck'));
+  return wrap;
 }
 function syncRows() {
   const rows = $('#f-users').children;
@@ -118,6 +119,8 @@ function confirmTwice(btn, label) {
 }
 
 // ---------------- register / profile ----------------
+attachCheck($('#r-user'), $('#r-check'));
+const checkProfileUser = attachCheck($('#p-user'), $('#p-check'));
 $('#f-register').onsubmit = async e => {
   e.preventDefault();
   await busy('#f-register button', '#r-err', async () => {
@@ -129,6 +132,7 @@ $('#f-register').onsubmit = async e => {
 $('#who-edit').onclick = () => {
   editingProfile = true;
   $('#p-name').value = st.name; $('#p-user').value = st.username; $('#p-err').textContent = '';
+  checkProfileUser();
   show('#v-profile');
 };
 $('#p-back').onclick = () => { editingProfile = false; render(); };

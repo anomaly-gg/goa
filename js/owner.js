@@ -80,8 +80,10 @@ function ago(ms) {
 
 function card(r) {
   const isToday = data.night === today;
-  const users = r.usernames.map(u =>
-    `<div class="user"><span>${esc(u)}</span><button data-copy="${esc(u)}">Copy</button></div>`).join('');
+  const users = r.usernames.map(u => {
+    const bad = (r.unknown || []).includes(u);
+    return `<div class="user${bad ? ' unknown' : ''}"><span>${esc(u)}${bad ? '<span class="warn">⚠ not on your username list</span>' : ''}</span><button data-copy="${esc(u)}">Copy</button></div>`;
+  }).join('');
   const draft = notes[r.id] ?? r.note ?? '';
   let acts = '';
   if (isToday && r.status === 'pending') {
@@ -173,7 +175,7 @@ $('#n-next').onclick = () => shiftNight(1);
 
 $('#f-add').onsubmit = async e => {
   e.preventDefault();
-  const usernames = $('#a-users').value.split(/[\s,]+/).filter(Boolean);
+  const usernames = $('#a-users').value.split(/[,\n]+/).map(s => s.trim()).filter(Boolean);
   const btn = $('#f-add button'); btn.disabled = true; $('#a-err').textContent = '';
   try {
     await call('/api/owner/add', { method: 'POST', headers: hdr(), body: { name: $('#a-name').value, usernames } });
@@ -182,6 +184,43 @@ $('#f-add').onsubmit = async e => {
   } catch (err) { $('#a-err').textContent = err.message; }
   btn.disabled = false;
 };
+
+// ---------------- cafe usernames (the list customers are checked against) ----------------
+let uTimer;
+async function loadNames() {
+  if (!key) return;
+  try {
+    const d = await call('/api/owner/usernames?q=' + encodeURIComponent($('#u-q').value.trim()), { headers: hdr() });
+    $('#u-count').textContent = `(${d.count})`;
+    const q = $('#u-q').value.trim();
+    $('#u-list').innerHTML = (d.results.length ? (q ? '' : '<div class="dim small">Last added:</div>') + d.results.map(u =>
+      `<div class="user"><span>${esc(u.username)}<span class="src">${u.source === 'import' ? 'imported' : 'added by you'}</span></span>
+       <button data-unrm="${esc(u.username)}">Remove</button></div>`).join('')
+      : `<div class="empty" style="padding:12px">${q ? 'No username like that.' : 'The list is empty.'}</div>`);
+    for (const b of document.querySelectorAll('[data-unrm]')) b.onclick = async () => {
+      if (!confirmTwice(b, 'Tap again')) return;
+      b.disabled = true;
+      try { await call('/api/owner/usernames/remove', { method: 'POST', headers: hdr(), body: { username: b.dataset.unrm } }); toast('Removed ' + b.dataset.unrm); }
+      catch (e) { $('#u-err').textContent = e.message; }
+      loadNames(); load();
+    };
+  } catch (e) { $('#u-err').textContent = e.message; }
+}
+$('#u-q').oninput = () => { clearTimeout(uTimer); uTimer = setTimeout(loadNames, 300); };
+$('#names-card').ontoggle = () => { if ($('#names-card').open) loadNames(); };
+$('#f-uadd').onsubmit = async e => {
+  e.preventDefault();
+  const usernames = $('#u-add').value.split(/[,\n]+/).map(s => s.trim()).filter(Boolean);
+  const btn = $('#f-uadd button'); btn.disabled = true; $('#u-err').textContent = '';
+  try {
+    const d = await call('/api/owner/usernames', { method: 'POST', headers: hdr(), body: { usernames } });
+    $('#u-add').value = '';
+    toast(d.added ? `Added ${d.added}${d.skipped ? ` · ${d.skipped} already on the list` : ''}` : 'Already on the list');
+    $('#u-q').value = ''; loadNames(); load();
+  } catch (err) { $('#u-err').textContent = err.message; }
+  btn.disabled = false;
+};
+loadNames();
 
 // Live: refresh every 15 s while visible (skipped while typing a note), and on return to the page.
 setInterval(() => {

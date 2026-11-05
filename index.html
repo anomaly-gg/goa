@@ -22,7 +22,8 @@
       <label for="r-name">Your name</label>
       <input id="r-name" autocomplete="name" maxlength="40" placeholder="e.g. Michael">
       <label for="r-user">Your cafe username</label>
-      <input id="r-user" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="32" placeholder="e.g. michael23">
+      <input id="r-user" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="64" placeholder="e.g. michael23">
+      <div class="ucheck" id="r-check"></div>
       <div class="hint">Type it exactly like you log in at the cafe.</div>
       <div class="err" id="r-err"></div>
       <button class="btn-main" type="submit">CONTINUE</button>
@@ -37,7 +38,7 @@
       <label>Who's playing? <span class="small">(one cafe username per PC)</span></label>
       <div id="f-users"></div>
       <button type="button" class="add" id="f-add">+ Add a friend</button>
-      <div class="hint">Friends don't need the app — just type their cafe username exactly.</div>
+      <div class="hint">Friends don't need the app — just type their cafe username.</div>
       <div class="err" id="f-err"></div>
       <button class="btn-main" type="submit" id="f-send">REQUEST OVERNIGHT</button>
     </form>
@@ -60,7 +61,8 @@
       <label for="p-name">Your name</label>
       <input id="p-name" maxlength="40">
       <label for="p-user">Your cafe username</label>
-      <input id="p-user" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="32">
+      <input id="p-user" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="64">
+      <div class="ucheck" id="p-check"></div>
       <div class="err" id="p-err"></div>
       <button class="btn-main" type="submit">SAVE</button>
       <button class="btn-ghost" type="button" id="p-back" style="width:100%;margin-top:8px">Back</button>

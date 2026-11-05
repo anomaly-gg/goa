@@ -29,6 +29,11 @@ button:disabled { opacity: .5; cursor: default; }
 .row input { flex: 1; }
 .x { background: transparent; color: var(--dim); border: 1px solid var(--line); padding: 12px 14px; }
 .add { margin-top: 10px; width: 100%; background: transparent; color: var(--gold); border: 1px dashed #5c4a12; }
+.ucheck { font-size: 14px; margin-top: 6px; }
+.ucheck:empty { display: none; }
+.ucheck.ok { color: var(--ok); }
+.ucheck.bad { color: var(--bad); }
+.ucheck .sug { padding: 3px 9px; border-radius: 8px; background: #222733; color: var(--text); font: 600 15px ui-monospace, Consolas, monospace; }
 .err { color: var(--bad); font-size: 14px; margin-top: 10px; min-height: 1em; }
 .status { text-align: center; padding: 26px 18px; }
 .status .big { font-size: 46px; line-height: 1; }
@@ -71,3 +76,6 @@ button:disabled { opacity: .5; cursor: default; }
 .empty { text-align: center; color: var(--dim); padding: 30px 10px; }
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #222733; color: var(--text);
   padding: 10px 16px; border-radius: 10px; font-size: 14px; border: 1px solid var(--line); }
+.user.unknown { border-color: #5a4a12; }
+.user .warn { color: var(--gold); font: 12px system-ui, sans-serif; margin-left: 8px; }
+.user .src { color: var(--dim); font: 12px system-ui, sans-serif; margin-left: 8px; }

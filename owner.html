@@ -47,10 +47,24 @@
         <label for="a-name">Name</label>
         <input id="a-name" maxlength="40">
         <label for="a-users">Cafe usernames</label>
-        <input id="a-users" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="separate with spaces or commas">
+        <input id="a-users" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="separate with commas">
         <div class="err" id="a-err"></div>
         <button class="btn-main" type="submit">ADD AS APPROVED</button>
       </form>
+    </details>
+
+    <details class="card" id="names-card">
+      <summary style="cursor:pointer;font-weight:700">👤 Cafe usernames <span class="dim small" id="u-count"></span></summary>
+      <p class="dim">Customers can only request with a username on this list. When you make a new account at the counter, add it here.</p>
+      <form id="f-uadd">
+        <label for="u-add">Add new username(s)</label>
+        <input id="u-add" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="separate with commas">
+        <div class="err" id="u-err"></div>
+        <button class="btn-main" type="submit">ADD USERNAME</button>
+      </form>
+      <label for="u-q">Search the list</label>
+      <input id="u-q" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="type part of a username">
+      <div class="users" id="u-list"></div>
     </details>
   </section>
   <p class="err" id="g-err" style="text-align:center"></p>
