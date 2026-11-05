@@ -1,3 +1,4 @@
+/* Pages are versioned by sw.js (deploy with _dev/deploy_web.py). */
 :root {
   --bg: #0d0f14; --card: #171a22; --line: #262b36; --text: #eef1f6; --dim: #8a93a6;
   --gold: #f5b301; --gold-ink: #1a1400; --ok: #2ecc71; --bad: #ff5c5c; --wait: #6aa7ff;

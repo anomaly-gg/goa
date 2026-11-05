@@ -1,6 +1,6 @@
 /* Keeps phones on the newest version. VERSION + FILES are stamped by ../_dev/deploy_web.py; don't edit those two lines by hand.
    Caches are named "reserve-v-…": /workout and /pantry share this origin and each only deletes its own prefix. */
-const VERSION = "reserve-v-3e537a649ca2";
+const VERSION = "reserve-v-e22a3041cbf9";
 const FILES = ["./", "css/app.css", "index.html", "js/api.js", "js/app.js", "js/owner.js", "js/pwa.js", "owner.html"];
 
 self.addEventListener("install", e => {
