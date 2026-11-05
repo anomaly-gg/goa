@@ -1,5 +1,6 @@
 // Owner page: approve / decline overnight requests, copy usernames into the kiosk Overnight tab.
 import { call, $, esc } from './api.js';
+import './pwa.js';
 
 const KEY = 'cr_owner_key';
 const NOTE_PRESETS = ['See you tonight 👍', 'PC ready', 'Full tonight, sorry'];

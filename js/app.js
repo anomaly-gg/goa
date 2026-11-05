@@ -1,5 +1,6 @@
 // Customer page: register once -> request overnight -> watch the answer.
 import { call, $, esc } from './api.js';
+import './pwa.js';
 
 const TOKEN_KEY = 'cr_token';
 let token = localStorage.getItem(TOKEN_KEY) || '';
