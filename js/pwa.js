@@ -20,3 +20,20 @@ if (IS_HOSTED && 'serviceWorker' in navigator) {
   // Never reload mid-tap (a submit could be in flight); a switched-away tab is safe.
   document.addEventListener('visibilitychange', () => { if (pending && document.visibilityState === 'hidden') reload(); });
 }
+
+// "Add to home screen" button (#install on the page): shown only when the browser offers it (Android Chrome/Edge),
+// hidden once installed. iPhones never fire this - they use Share -> Add to Home Screen.
+let installPrompt = null;
+const installBtn = document.getElementById('install');
+const installed = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault(); installPrompt = e;
+  if (installBtn && !installed()) installBtn.classList.remove('hidden');
+});
+window.addEventListener('appinstalled', () => { installPrompt = null; installBtn?.classList.add('hidden'); });
+if (installBtn) installBtn.onclick = async () => {
+  if (!installPrompt) return;
+  installPrompt.prompt();
+  await installPrompt.userChoice.catch(() => {});
+  installPrompt = null; installBtn.classList.add('hidden');
+};
