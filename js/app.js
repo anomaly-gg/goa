@@ -45,7 +45,7 @@ function render() {
 
 function statusText(r) {
   if (r.status === 'pending')  return ['⏳', 'Waiting for the owner', 'This page updates by itself. You can close it and check back later.'];
-  if (r.status === 'approved') return ['✅', "You're on tonight's overnight list", `Approved for ${st.nightLabel}. Log in at the cafe as usual.`];
+  if (r.status === 'approved') return ['✅', "You're on tonight's overnight list", `Approved for ${st.nightLabel}. Log in at the cafe as usual. Leaving during curfew ends your overnight — you can't log back in until curfew is over.`];
   return ['❌', 'Not approved tonight', 'You can request again tomorrow.'];
 }
 
