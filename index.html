@@ -43,7 +43,6 @@
       <div id="f-users"></div>
       <button type="button" class="add" id="f-add">+ Add a friend</button>
       <div class="hint">Friends don't need the app — just type their cafe username.</div>
-      <div class="hint">House rule: leaving during curfew ends your overnight. Logging back in counts as a warning; 2 warnings in 30 days = no overnight for 7 days.</div>
       <div class="err" id="f-err"></div>
       <button class="btn-main" type="submit" id="f-send">REQUEST OVERNIGHT</button>
     </form>
@@ -79,6 +78,25 @@
     <button class="link" id="who-edit">Edit</button>
   </div>
   <p class="err" id="g-err" style="text-align:center"></p>
+
+  <!-- overnight rules (always shown except while editing details) -->
+  <section id="rules" class="card rules">
+    <h2>📋 Overnight rules</h2>
+    <h3>Getting overnight</h3>
+    <ul>
+      <li>You need the owner's approval. No walk-in overnight after 10 PM.</li>
+      <li>You can request from 6 AM to 10 PM, for tonight only.</li>
+      <li>Your approval is good for one night. Request again for the next night.</li>
+    </ul>
+    <h3>During curfew (10 PM – 4 AM)</h3>
+    <ul>
+      <li>If you log out, your overnight ends. You can't log back in until curfew is over.</li>
+      <li>Switching PCs? Log back in within 5 minutes and it doesn't count.</li>
+      <li>You can lock your seat. That's fine.</li>
+      <li>If you come back after leaving, you get a warning. 2 warnings in 30 days = no overnight for 7 days.</li>
+      <li>Emergency? Message the owner before you step out. If the owner says OK, it won't count.</li>
+    </ul>
+  </section>
   <div class="foot"><button class="link hidden" id="install">📲 Add NETPIX to your home screen</button></div>
 </main>
 <script type="module" src="js/app.js"></script>

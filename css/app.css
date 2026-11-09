@@ -49,6 +49,10 @@ button:disabled { opacity: .5; cursor: default; }
 .link { background: none; border: 0; color: var(--dim); text-decoration: underline; padding: 6px 0; font-weight: 400; font-size: 14px; }
 .foot { text-align: center; margin-top: 8px; }
 .hidden { display: none !important; }
+.rules { margin-top: 14px; }
+.rules h3 { margin: 14px 0 4px; font-size: 14px; color: var(--brand); text-transform: uppercase; letter-spacing: .04em; }
+.rules ul { margin: 0; padding-left: 20px; }
+.rules li { font-size: 15px; margin: 6px 0; }
 
 /* owner */
 .tabs { display: flex; gap: 6px; margin-bottom: 12px; }

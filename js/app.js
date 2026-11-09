@@ -14,6 +14,7 @@ const views = ['#v-register', '#v-form', '#v-status', '#v-profile'];
 function show(id) {
   for (const v of views) $(v).classList.toggle('hidden', v !== id);
   $('#who').classList.toggle('hidden', !st || id === '#v-register' || id === '#v-profile');
+  $('#rules').classList.toggle('hidden', id === '#v-profile');
 }
 
 // ---------------- load / render ----------------
