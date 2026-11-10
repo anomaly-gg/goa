@@ -1,6 +1,6 @@
 // NETPIX Goa shell (GOA_PLAN.md G1): bottom tabs + the Home and Cafe tabs. The Overnight tab is app.js, unchanged.
 // Home/Cafe need no registration; only Overnight asks for a name + username.
-import { call, $, esc } from './api.js';
+import { API, call, $, esc } from './api.js';
 
 const TABS = ['home', 'overnight', 'cafe'];
 let home = null;          // last /api/home
@@ -22,10 +22,12 @@ showTab();
 async function load() {
   try { home = await call('/api/home'); $('#c-err').textContent = ''; }
   catch (e) { if (!home) $('#c-err').textContent = e.message; }
-  paintInfo(); paintNight();
+  paintInfo(); paintNight(); paintLive();
 }
 document.addEventListener('overnight', e => { night = e.detail; nightSeen = true; paintNight(); });
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') load(); });
+// The free-PC count is live: refresh once a minute while the app is open on screen (the server sends about as often).
+setInterval(() => { if (document.visibilityState === 'visible') load(); }, 60e3);
 
 // ---------------- Home: overnight card ----------------
 function paintNight() {
@@ -59,6 +61,11 @@ function ratesHtml(text) {
 }
 const mapUrl = i => i.map || (i.address ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('NETPIX ' + i.address) : '');
 function telHref(p) { return 'tel:' + p.replace(/[^\d+]/g, ''); }
+// One button markup for Home's quick row and the Cafe tab's contact row. External links open outside the app.
+function linkBtn(icon, label, href) {
+  const ext = /^https:/.test(href) ? ' target="_blank" rel="noopener"' : '';
+  return `<a class="qbtn" href="${esc(href)}"${ext}><span>${icon}</span>${esc(label)}</a>`;
+}
 
 function paintInfo() {
   if (!home) return;
@@ -69,9 +76,9 @@ function paintInfo() {
   $('#h-hours').classList.toggle('hidden', !i.hours);
   $('#h-hours').textContent = i.hours ? '🕐 ' + i.hours : '';
   const quick = [];
-  if (mapUrl(i)) quick.push(`<a class="qbtn" href="${esc(mapUrl(i))}" target="_blank" rel="noopener"><span>📍</span>Directions</a>`);
-  if (i.facebook) quick.push(`<a class="qbtn" href="${esc(i.facebook)}" target="_blank" rel="noopener"><span>💬</span>Message us</a>`);
-  if (i.phone) quick.push(`<a class="qbtn" href="${esc(telHref(i.phone))}"><span>📞</span>Call</a>`);
+  if (mapUrl(i)) quick.push(linkBtn('📍', 'Directions', mapUrl(i)));
+  if (i.facebook) quick.push(linkBtn('💬', 'Message us', i.facebook));
+  if (i.phone) quick.push(linkBtn('📞', 'Call', telHref(i.phone)));
   $('#h-quick').innerHTML = quick.join('');
   $('#h-quick').classList.toggle('hidden', !quick.length);
   // Cafe tab
@@ -84,11 +91,56 @@ function paintInfo() {
   $('#c-address').classList.toggle('hidden', !i.address);
   $('#c-map').href = mapUrl(i) || '#';
   const contact = [];
-  if (i.facebook) contact.push(`<a class="qbtn" href="${esc(i.facebook)}" target="_blank" rel="noopener"><span>💬</span>Facebook page</a>`);
-  if (i.phone) contact.push(`<a class="qbtn" href="${esc(telHref(i.phone))}"><span>📞</span>${esc(i.phone)}</a>`);
+  if (i.facebook) contact.push(linkBtn('💬', 'Facebook page', i.facebook));
+  if (i.phone) contact.push(linkBtn('📞', i.phone, telHref(i.phone)));
   $('#c-contact-list').innerHTML = contact.join('');
   $('#c-contact').classList.toggle('hidden', !contact.length);
-  $('#c-empty').classList.toggle('hidden', !!(i.rates || i.hours || i.address || i.map || contact.length));
+  $('#c-empty').classList.toggle('hidden', !!(i.rates || i.hours || i.address || i.map || contact.length || (home.games || []).length));
 }
+
+// ---------------- Home + Cafe: live from the cafe server (G2) ----------------
+function agoMs(ms) {
+  const m = Math.round((Date.now() - ms) / 60000);
+  return m < 1 ? 'just now' : m === 1 ? '1 min ago' : m + ' min ago';
+}
+function shortDate(s) {
+  const d = new Date(String(s).replace(' ', 'T'));
+  return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+function paintLive() {
+  if (!home) return;
+  const s = home.seats;
+  $('#h-seats').classList.toggle('hidden', !s);
+  if (s) {
+    $('#h-seats').classList.toggle('full', s.free === 0);
+    $('#h-free').textContent = s.free === 0 ? 'Full' : s.free;
+    $('#h-of').textContent = s.free === 0 ? ' right now, every PC is in use' : ` of ${s.total} PCs free right now`;
+    $('#h-seats-sub').textContent = [s.inUse ? `${s.inUse} in use` : '', s.oos ? `${s.oos} under repair` : '', 'updated ' + agoMs(s.at)].filter(Boolean).join(' · ');
+  }
+  const news = home.news || [];
+  $('#h-news').innerHTML = news.length ? `<h3 class="sec">📢 News &amp; promos</h3>` + news.map(n => `
+    <article class="card post">
+      ${n.image ? `<img src="${API}/api/img/${esc(n.image)}" alt="" loading="lazy" onerror="this.remove()">` : ''}
+      <div class="post-top"><h2>${n.pinned ? '📌 ' : ''}${esc(n.title)}</h2><span class="dim small">${esc(shortDate(n.createdAt))}</span></div>
+      ${n.body ? `<p class="post-body">${esc(n.body)}</p>` : ''}
+    </article>`).join('') : '';
+  for (const b of document.querySelectorAll('#h-news .post-body')) {
+    if (b.scrollHeight > b.clientHeight + 4) { b.classList.add('more'); b.onclick = () => b.classList.replace('more', 'open'); }
+  }
+  paintGames();
+}
+function paintGames() {
+  const all = home?.games || [];
+  $('#c-games').classList.toggle('hidden', !all.length);
+  $('#c-games-n').textContent = all.length ? `(${all.length})` : '';
+  const q = $('#c-games-q').value.trim().toLowerCase();
+  const list = q ? all.filter(g => g.name.toLowerCase().includes(q)) : all;
+  const by = {};
+  for (const g of list) (by[g.category] = by[g.category] || []).push(g.name);
+  $('#c-games-list').innerHTML = list.length
+    ? Object.keys(by).sort((a, b) => (/^apps?$/i.test(a) - /^apps?$/i.test(b)) || a.localeCompare(b)).map(c => `<div class="gcat">${esc(c)}</div><div class="gl">${by[c].map(n => `<span class="chip">${esc(n)}</span>`).join('')}</div>`).join('')
+    : `<div class="empty" style="padding:14px">No game called "${esc(q)}". Ask at the counter.</div>`;
+}
+$('#c-games-q').addEventListener('input', paintGames);
 
 load();

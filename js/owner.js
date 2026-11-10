@@ -192,6 +192,12 @@ async function loadNames() {
   try {
     const d = await call('/api/owner/usernames?q=' + encodeURIComponent($('#u-q').value.trim()), { headers: hdr() });
     $('#u-count').textContent = `(${d.count})`;
+    // Synced from the cafe server (G2) within the last day: the list keeps itself up to date, so no add box.
+    const synced = d.syncedAt && Date.now() - d.syncedAt < 86400e3;
+    $('#u-sync').classList.toggle('hidden', !synced);
+    $('#u-manual').classList.toggle('hidden', !!synced);
+    $('#f-uadd').classList.toggle('hidden', !!synced);
+    if (synced) $('#u-sync').textContent = `🔄 Synced from the cafe automatically (${ago(d.syncedAt)}). New accounts show up here by themselves; disabled ones drop off.`;
     const q = $('#u-q').value.trim();
     $('#u-list').innerHTML = (d.results.length ? (q ? '' : '<div class="dim small">Last added:</div>') + d.results.map(u =>
       `<div class="user"><span>${esc(u.username)}<span class="src">${u.source === 'import' ? 'imported' : 'added by you'}</span></span>

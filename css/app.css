@@ -113,3 +113,29 @@ a.as-btn { display: block; text-align: center; text-decoration: none; border-rad
 textarea { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); background: #0f1218;
   color: var(--text); font: 16px/1.4 system-ui, sans-serif; outline: none; resize: vertical; }
 textarea:focus { border-color: var(--brand); }
+
+/* ---- G2: live from the cafe server ---- */
+.live { border-color: #1f4d33; background: linear-gradient(180deg, #13251b, var(--card)); }
+.live.full { border-color: #5a2a2a; background: linear-gradient(180deg, #2a1515, var(--card)); }
+.live-top { font-size: 12px; font-weight: 800; letter-spacing: .08em; color: var(--ok); display: flex; align-items: center; gap: 7px; }
+.live.full .live-top { color: var(--bad); }
+.live .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 0 currentColor; animation: pulse 2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(46,204,113,.6); } 70% { box-shadow: 0 0 0 8px rgba(46,204,113,0); } 100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); } }
+@media (prefers-reduced-motion: reduce) { .live .dot { animation: none; } }
+.live-n { margin-top: 6px; font-size: 17px; }
+.live-n b { font-size: 40px; line-height: 1; margin-right: 4px; }
+h3.sec { font-size: 14px; color: var(--dim); text-transform: uppercase; letter-spacing: .06em; margin: 20px 2px 10px; }
+.post { padding: 0; overflow: hidden; }
+.post img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: cover; background: #0f1218; }
+.post-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 14px 16px 0; }
+.post-top h2 { font-size: 17px; margin: 0; }
+.post-top .small { white-space: nowrap; }
+.post-body { white-space: pre-wrap; margin: 8px 16px 16px; font-size: 15px; color: #d3d8e2;
+  display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+.post-body.open { display: block; }
+.post-body.more { cursor: pointer; position: relative; }
+.post-body.more::after { content: "…  tap to read more"; position: absolute; right: 0; bottom: 0; padding-left: 30px; color: var(--brand); font-weight: 600;
+  background: linear-gradient(90deg, transparent, var(--card) 30px); }
+input[type=search] { -webkit-appearance: none; appearance: none; }
+.gcat { font-size: 12px; font-weight: 800; color: var(--brand); text-transform: uppercase; letter-spacing: .06em; margin: 14px 0 6px; }
+.gl { display: flex; flex-wrap: wrap; gap: 6px; }

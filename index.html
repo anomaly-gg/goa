@@ -20,6 +20,12 @@
 
   <!-- ================= HOME ================= -->
   <div id="t-home" class="tab">
+    <!-- live from the cafe server (G2, server/CloudBridge.cs); hidden when the server hasn't checked in for 10 min -->
+    <section class="card live hidden" id="h-seats">
+      <div class="live-top"><span class="dot"></span>LIVE AT THE CAFE</div>
+      <div class="live-n"><b id="h-free"></b><span id="h-of"></span></div>
+      <p class="dim" id="h-seats-sub"></p>
+    </section>
     <section class="card mini" id="h-night">
       <div class="mini-top"><h2>🌙 Overnight tonight</h2><span class="pill" id="h-night-pill"></span></div>
       <p class="dim" id="h-night-sub"></p>
@@ -31,6 +37,7 @@
       <p class="dim hidden" id="h-hours"></p>
     </section>
     <div class="quick hidden" id="h-quick"></div>
+    <div id="h-news"></div>
   </div>
 
   <!-- ================= OVERNIGHT (the original app, unchanged) ================= -->
@@ -123,6 +130,9 @@
     <section class="card hidden" id="c-hours"><h2>🕐 Open</h2><p id="c-hours-text"></p></section>
     <section class="card hidden" id="c-where"><h2>📍 Where we are</h2><p id="c-address"></p>
       <a class="btn-main as-btn" id="c-map" target="_blank" rel="noopener">GET DIRECTIONS</a></section>
+    <section class="card hidden" id="c-games"><h2>🎮 Games &amp; apps <span class="dim small" id="c-games-n"></span></h2>
+      <input id="c-games-q" type="search" autocomplete="off" placeholder="Search a game" style="margin-top:8px">
+      <div id="c-games-list"></div></section>
     <section class="card hidden" id="c-contact"><h2>💬 Contact</h2><div class="quick" id="c-contact-list"></div></section>
     <div class="empty hidden" id="c-empty">Cafe info is coming soon.</div>
     <p class="err" id="c-err" style="text-align:center"></p>

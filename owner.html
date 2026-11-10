@@ -82,7 +82,8 @@
 
     <details class="card" id="names-card">
       <summary style="cursor:pointer;font-weight:700">👤 Cafe usernames <span class="dim small" id="u-count"></span></summary>
-      <p class="dim">Customers can only request with a username on this list. When you make a new account at the counter, add it here.</p>
+      <p class="dim" id="u-manual">Customers can only request with a username on this list. When you make a new account at the counter, add it here.</p>
+      <p class="dim hidden" id="u-sync" style="color:var(--ok)"></p>
       <form id="f-uadd">
         <label for="u-add">Add new username(s)</label>
         <input id="u-add" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="separate with commas">
