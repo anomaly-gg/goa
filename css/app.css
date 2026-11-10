@@ -156,3 +156,6 @@ input[type=search] { -webkit-appearance: none; appearance: none; }
 .status.acct-online h2 { color: var(--warn); }
 .status.acct-offline h2 { color: var(--ok); }
 .status.acct-unknown h2 { color: var(--dim); }
+/* G4: the compact "Notify me" link only makes sense while the overnight request is waiting */
+#v-status:not(.pending) [data-push-btn][data-compact] { display: none; }
+#v-status [data-push-btn][data-compact] { display: block; margin: 14px auto 0; color: var(--brand); text-decoration: none; font-weight: 600; }
