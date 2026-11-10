@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d0f14">
 <meta name="robots" content="noindex">
-<title>Owner · Overnight Requests</title>
+<title>Owner · NETPIX Goa</title>
 <link rel="manifest" href="owner.webmanifest">
 <link rel="icon" href="icons/owner-favicon-64.png">
 <link rel="apple-touch-icon" href="icons/owner-apple-touch-icon.png">
@@ -54,6 +54,29 @@
         <input id="a-users" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="separate with commas">
         <div class="err" id="a-err"></div>
         <button class="btn-main" type="submit">ADD AS APPROVED</button>
+      </form>
+    </details>
+
+    <details class="card" id="info-card">
+      <summary style="cursor:pointer;font-weight:700">🏪 Cafe info <span class="dim small">(shows in the app)</span></summary>
+      <p class="dim">What customers see on the app's Home and Cafe tabs. Leave a box empty to hide it.</p>
+      <form id="f-info">
+        <label for="i-rates">Rates <span class="small">(one per line, like ₱15 = 1 hour)</span></label>
+        <textarea id="i-rates" rows="3" maxlength="400"></textarea>
+        <label for="i-hours">Open hours</label>
+        <input id="i-hours" maxlength="80" placeholder="e.g. Open 24 hours">
+        <label for="i-address">Address</label>
+        <input id="i-address" maxlength="160" placeholder="street, barangay, Goa">
+        <div class="hint">The Directions button searches this address on Google Maps.</div>
+        <label for="i-map">Google Maps link <span class="small">(optional, more exact)</span></label>
+        <input id="i-map" maxlength="400" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Maps app → your shop → Share → Copy link">
+        <label for="i-fb">Facebook page link</label>
+        <input id="i-fb" maxlength="400" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="facebook.com/yourpage">
+        <label for="i-phone">Phone number</label>
+        <input id="i-phone" maxlength="30" inputmode="tel" placeholder="e.g. 0917 123 4567">
+        <div class="err" id="i-err"></div>
+        <button class="btn-main" type="submit">SAVE CAFE INFO</button>
+        <div class="hint" style="text-align:center"><a href="./#cafe" target="_blank" rel="noopener" style="color:var(--dim)">See it in the app</a></div>
       </form>
     </details>
 

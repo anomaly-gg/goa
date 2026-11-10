@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "NETPIX Gaming Hub · Overnight",
+  "name": "NETPIX Goa",
   "short_name": "NETPIX",
-  "description": "Request overnight at NETPIX Gaming Hub from home.",
+  "description": "NETPIX Gaming Hub, Goa: overnight requests, rates and cafe info.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

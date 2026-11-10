@@ -1,4 +1,4 @@
-// Owner page: approve / decline overnight requests, copy usernames into the kiosk Overnight tab.
+// Owner page (NETPIX Goa): approve / decline overnight requests, copy usernames into the kiosk Overnight tab, edit cafe info.
 import { call, $, esc } from './api.js';
 import './pwa.js';
 
@@ -221,6 +221,29 @@ $('#f-uadd').onsubmit = async e => {
   btn.disabled = false;
 };
 loadNames();
+
+// ---------------- cafe info (Home + Cafe tabs of the customer app) ----------------
+const INFO_FIELDS = { rates: '#i-rates', hours: '#i-hours', address: '#i-address', map: '#i-map', facebook: '#i-fb', phone: '#i-phone' };
+async function loadInfo() {
+  if (!key) return;
+  try {
+    const { info } = await call('/api/owner/info', { headers: hdr() });
+    for (const [k, sel] of Object.entries(INFO_FIELDS)) $(sel).value = info[k] || '';
+  } catch (e) { $('#i-err').textContent = e.message; }
+}
+$('#info-card').ontoggle = () => { if ($('#info-card').open) loadInfo(); };
+$('#f-info').onsubmit = async e => {
+  e.preventDefault();
+  const btn = $('#f-info button'); btn.disabled = true; $('#i-err').textContent = '';
+  const b = {};
+  for (const [k, sel] of Object.entries(INFO_FIELDS)) b[k] = $(sel).value;
+  try {
+    const { info } = await call('/api/owner/info', { method: 'PUT', headers: hdr(), body: b });
+    for (const [k, sel] of Object.entries(INFO_FIELDS)) $(sel).value = info[k] || '';
+    toast('Saved. The app shows it now.');
+  } catch (err) { $('#i-err').textContent = err.message; }
+  btn.disabled = false;
+};
 
 // Live: refresh every 15 s while visible (skipped while typing a note), and on return to the page.
 setInterval(() => {

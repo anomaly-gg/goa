@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d0f14">
-<title>Overnight Request · NETPIX Gaming Hub</title>
+<title>NETPIX Goa</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/favicon-64.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -15,8 +15,26 @@
 <main>
   <header class="brand">
     <img class="logo" src="icons/wordmark.png" alt="NETPIX Gaming Hub" width="960" height="326">
-    <div class="sub">🌙 Overnight request</div>
+    <div class="sub">📍 Goa</div>
   </header>
+
+  <!-- ================= HOME ================= -->
+  <div id="t-home" class="tab">
+    <section class="card mini" id="h-night">
+      <div class="mini-top"><h2>🌙 Overnight tonight</h2><span class="pill" id="h-night-pill"></span></div>
+      <p class="dim" id="h-night-sub"></p>
+      <a class="btn-main as-btn" href="#overnight" id="h-night-btn">REQUEST OVERNIGHT</a>
+    </section>
+    <section class="card hidden" id="h-rates">
+      <div class="mini-top"><h2>💸 Rates</h2><a class="link" href="#cafe">More info</a></div>
+      <div class="rates" id="h-rates-list"></div>
+      <p class="dim hidden" id="h-hours"></p>
+    </section>
+    <div class="quick hidden" id="h-quick"></div>
+  </div>
+
+  <!-- ================= OVERNIGHT (the original app, unchanged) ================= -->
+  <div id="t-overnight" class="tab hidden">
 
   <!-- 1. first visit -->
   <section id="v-register" class="card hidden">
@@ -97,8 +115,26 @@
       <li>Emergency? Message the owner before you step out. If the owner says OK, it won't count.</li>
     </ul>
   </section>
+  </div>
+
+  <!-- ================= CAFE INFO (owner edits it on the owner page) ================= -->
+  <div id="t-cafe" class="tab hidden">
+    <section class="card hidden" id="c-rates"><h2>💸 Rates</h2><div class="rates" id="c-rates-list"></div></section>
+    <section class="card hidden" id="c-hours"><h2>🕐 Open</h2><p id="c-hours-text"></p></section>
+    <section class="card hidden" id="c-where"><h2>📍 Where we are</h2><p id="c-address"></p>
+      <a class="btn-main as-btn" id="c-map" target="_blank" rel="noopener">GET DIRECTIONS</a></section>
+    <section class="card hidden" id="c-contact"><h2>💬 Contact</h2><div class="quick" id="c-contact-list"></div></section>
+    <div class="empty hidden" id="c-empty">Cafe info is coming soon.</div>
+    <p class="err" id="c-err" style="text-align:center"></p>
+  </div>
   <div class="foot"><button class="link hidden" id="install">📲 Add NETPIX to your home screen</button></div>
 </main>
+<nav class="tabbar" id="tabbar">
+  <a href="#" data-tab="home"><span>🏠</span>Home</a>
+  <a href="#overnight" data-tab="overnight"><span>🌙</span>Overnight</a>
+  <a href="#cafe" data-tab="cafe"><span>ℹ️</span>Cafe</a>
+</nav>
 <script type="module" src="js/app.js"></script>
+<script type="module" src="js/hub.js"></script>
 </body>
 </html>

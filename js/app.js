@@ -31,6 +31,7 @@ async function refresh() {
 }
 
 function render() {
+  document.dispatchEvent(new CustomEvent('overnight', { detail: st }));   // hub.js mirrors it on the Home card
   if (!st) { show('#v-register'); return; }
   if (editingProfile) return;
   $('#who-text').textContent = `${st.name} · ${st.username}`;
