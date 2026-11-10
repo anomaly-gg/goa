@@ -1,3 +1,6 @@
+// Never run inside someone else's page (clickjacking: an invisible frame over "This isn't me" or Approve).
+if (window.top !== window.self) { document.documentElement.innerHTML = ''; throw new Error('framed'); }
+
 // Shared API helper. Local dev (python -m http.server 8791) talks to `wrangler dev` on 8787.
 export const API = /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
   ? 'http://localhost:8787' : 'https://cafe-reserve.xpropics.workers.dev';

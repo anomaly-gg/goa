@@ -139,3 +139,20 @@ h3.sec { font-size: 14px; color: var(--dim); text-transform: uppercase; letter-s
 input[type=search] { -webkit-appearance: none; appearance: none; }
 .gcat { font-size: 12px; font-weight: 800; color: var(--brand); text-transform: uppercase; letter-spacing: .06em; margin: 14px 0 6px; }
 .gl { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* ---- G3: account status ---- */
+.acctline { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); padding: 13px 16px; font-size: 15px; }
+.acctline .chev { margin-left: auto; color: var(--dim); font-size: 22px; line-height: 1; }
+.acctline.warnline { border-color: #6b4a12; background: #221a0c; }
+.steps { margin: 12px 0 4px; padding-left: 22px; }
+.steps li { margin: 6px 0; }
+.btn-main.danger { background: var(--bad); color: #fff; }
+.note.good { border-color: #1f4d33; color: #b9f5cf; }
+.note.bad { border-color: #5a2a2a; color: #ffc9c9; }
+.note:not(.hidden) { margin-bottom: 14px; }
+.phone { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 12px; margin-top: 8px;
+  background: #0f1218; border: 1px solid var(--line); border-radius: 10px; }
+.phone.new { border-color: #6b4a12; }
+.status.acct-online h2 { color: var(--warn); }
+.status.acct-offline h2 { color: var(--ok); }
+.status.acct-unknown h2 { color: var(--dim); }

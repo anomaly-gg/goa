@@ -1,0 +1,7 @@
+# Real security headers (Cloudflare static assets). The CSP meta tags in the pages say the same; frame-ancestors only works here.
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://cafe-reserve.xpropics.workers.dev http://localhost:8787; connect-src 'self' https://cafe-reserve.xpropics.workers.dev http://localhost:8787; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'self'; object-src 'none'; frame-ancestors 'none'

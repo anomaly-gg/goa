@@ -2,7 +2,7 @@
 // Home/Cafe need no registration; only Overnight asks for a name + username.
 import { API, call, $, esc } from './api.js';
 
-const TABS = ['home', 'overnight', 'cafe'];
+const TABS = ['home', 'overnight', 'account', 'cafe'];
 let home = null;          // last /api/home
 let night = null;         // last overnight state from app.js (null = not registered yet)
 let nightSeen = false;    // app.js has answered at least once
@@ -120,10 +120,11 @@ function paintLive() {
   const news = home.news || [];
   $('#h-news').innerHTML = news.length ? `<h3 class="sec">📢 News &amp; promos</h3>` + news.map(n => `
     <article class="card post">
-      ${n.image ? `<img src="${API}/api/img/${esc(n.image)}" alt="" loading="lazy" onerror="this.remove()">` : ''}
+      ${n.image ? `<img src="${API}/api/img/${esc(n.image)}" alt="" loading="lazy">` : ''}
       <div class="post-top"><h2>${n.pinned ? '📌 ' : ''}${esc(n.title)}</h2><span class="dim small">${esc(shortDate(n.createdAt))}</span></div>
       ${n.body ? `<p class="post-body">${esc(n.body)}</p>` : ''}
     </article>`).join('') : '';
+  for (const img of document.querySelectorAll('#h-news img')) img.addEventListener('error', () => img.remove());   // no inline handlers (CSP)
   for (const b of document.querySelectorAll('#h-news .post-body')) {
     if (b.scrollHeight > b.clientHeight + 4) { b.classList.add('more'); b.onclick = () => b.classList.replace('more', 'open'); }
   }
