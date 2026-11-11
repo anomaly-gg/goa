@@ -79,7 +79,9 @@ function userRow(value = '') {
 function syncRows() {
   const rows = $('#f-users').children;
   for (const r of rows) r.querySelector('.x').style.visibility = rows.length > 1 ? 'visible' : 'hidden';
-  $('#f-add').classList.toggle('hidden', rows.length >= 10);
+  const max = (st && st.maxUsers) || 4;                       // the limit comes from the app server (/api/me)
+  $('#f-add').classList.toggle('hidden', rows.length >= max);
+  $('#f-max').textContent = rows.length >= max ? `That's the most for one request (${max} PCs). A bigger group can message the owner.` : `Up to ${max} PCs per request.`;
   $('#f-send').textContent = rows.length > 1 ? `REQUEST OVERNIGHT (${rows.length} PCs)` : 'REQUEST OVERNIGHT';
 }
 function showForm() {
