@@ -1,6 +1,6 @@
 /* Keeps phones on the newest version. VERSION + FILES are stamped by ../_dev/deploy_web.py; don't edit those two lines by hand.
    Caches are named "goa-v-…": /workout, /pantry and /reserve (the old URL) share this origin and each only deletes its own prefix. */
-const VERSION = "goa-v-543761e254ed";
+const VERSION = "goa-v-989bbceb39fa";
 const FILES = ["./", "css/app.css", "icons/apple-touch-icon.png", "icons/favicon-64.png", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "icons/owner-apple-touch-icon.png", "icons/owner-favicon-64.png", "icons/owner-icon-192.png", "icons/owner-icon-512.png", "icons/owner-maskable-512.png", "icons/sprite.svg", "icons/wordmark.png", "index.html", "js/account.js", "js/api.js", "js/app.js", "js/hub.js", "js/owner.js", "js/push.js", "js/pwa.js", "js/usercheck.js", "manifest.webmanifest", "owner.html", "owner.webmanifest"];
 
 self.addEventListener("install", e => {

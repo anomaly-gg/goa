@@ -213,6 +213,9 @@ h3.sec .ic { width: 16px; height: 16px; }
 .user.unknown { border-color: rgba(245, 179, 1, .4); }
 .user .warn { color: var(--warn); font: 12px system-ui, sans-serif; margin-left: 8px; }
 .user .src { color: var(--dim); font: 12px system-ui, sans-serif; margin-left: 8px; }
+.srv { margin-top: 8px; font-size: 13px; line-height: 1.4; color: var(--dim); }   /* what the cafe server did with the request (G5) */
+.srv.ok { color: var(--ok); }
+.srv.bad { color: var(--warn); }
 .acts { display: flex; gap: 8px; margin-top: 12px; }
 .acts button { flex: 1; }
 .notes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }

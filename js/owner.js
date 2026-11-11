@@ -1,4 +1,7 @@
-// Owner page (NETPIX Goa): approve / decline overnight requests, copy usernames into the kiosk Overnight tab, edit cafe info.
+// Owner page (NETPIX Goa): approve / decline overnight requests, edit cafe info.
+// G5 (GOA_PLAN.md): when the cafe server syncs (data.sync), Approve here also clears the usernames on the server by itself,
+// and each card shows what the server did. Without it (old server, feed off, shop internet down) the Copy buttons are
+// still how the usernames get into the kiosk Overnight tab.
 import { call, $, esc } from './api.js';
 import './pwa.js';
 
@@ -78,6 +81,15 @@ function ago(ms) {
   return new Date(ms).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 }
 
+// What the cafe server did with a request (G5). Nothing to show when it doesn't sync.
+function serverLine(r) {
+  const s = r.server;
+  if (r.status !== 'approved') return s && s.removed.length ? `<div class="srv">Pass removed on the cafe server: ${s.removed.map(esc).join(', ')}</div>` : '';
+  if (!s) return data.sync ? '<div class="srv">Sending to the cafe server… (up to a minute)</div>' : '';
+  return (s.cleared.length ? `<div class="srv ok">✓ Cleared on the cafe server: ${s.cleared.map(esc).join(', ')}</div>` : '') +
+    s.skipped.map(k => `<div class="srv bad">⚠ Not cleared: <b>${esc(k.u)}</b>. ${esc(k.why)}</div>`).join('');
+}
+
 function card(r) {
   const isToday = data.night === today;
   const users = r.usernames.map(u => {
@@ -109,6 +121,7 @@ function card(r) {
     <div class="time">${ago(r.created)} · ${r.usernames.length} PC${r.usernames.length > 1 ? 's' : ''}${r.blocked ? ' · <span style="color:var(--bad)">phone blocked</span>' : ''}</div>
     ${r.note && r.status !== 'pending' ? `<div class="note small">💬 ${esc(r.note)}</div>` : ''}
     <div class="users">${users}</div>
+    ${serverLine(r)}
     ${acts}
     <div style="text-align:right">${block}</div>
   </div>`;
@@ -125,7 +138,7 @@ function wire() {
     const id = Number(b.dataset.decide);
     await act(b, () => call('/api/owner/decide', { method: 'POST', headers: hdr(), body: { id, status: b.dataset.s, note: notes[id] ?? '' } }));
     delete notes[id];
-    toast(b.dataset.s === 'approved' ? '✅ Approved — now add them in the Overnight tab' : 'Declined');
+    toast(b.dataset.s !== 'approved' ? 'Declined' : data.sync ? '✅ Approved. The cafe server clears them by itself.' : '✅ Approved — now add them in the Overnight tab');
   };
   for (const b of document.querySelectorAll('[data-block]')) b.onclick = async () => {
     if (!confirmTwice(b, b.dataset.b === '1' ? 'Tap again to block' : 'Tap again to unblock')) return;
