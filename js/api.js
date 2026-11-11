@@ -19,4 +19,6 @@ export async function call(path, { method = 'GET', body, headers = {} } = {}) {
 }
 
 export const $ = s => document.querySelector(s);
+// One icon from icons/sprite.svg, as markup (colour and size follow the text around it; see .ic in app.css).
+export const ic = name => `<svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#${name}"/></svg>`;
 export const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));

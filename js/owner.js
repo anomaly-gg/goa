@@ -229,7 +229,7 @@ $('#f-uadd').onsubmit = async e => {
 loadNames();
 
 // ---------------- cafe info (Home + Cafe tabs of the customer app) ----------------
-const INFO_FIELDS = { rates: '#i-rates', hours: '#i-hours', address: '#i-address', map: '#i-map', facebook: '#i-fb', phone: '#i-phone' };
+const INFO_FIELDS = { rates: '#i-rates', hours: '#i-hours', address: '#i-address', map: '#i-map', facebook: '#i-fb' };
 async function loadInfo() {
   if (!key) return;
   try {

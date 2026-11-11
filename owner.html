@@ -17,7 +17,7 @@
 <main>
   <header class="brand">
     <img class="logo" src="icons/wordmark.png" alt="NETPIX Gaming Hub" width="960" height="326">
-    <div class="sub">🔑 Owner · overnight requests</div>
+    <div class="sub"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#key"/></svg>Owner</div>
   </header>
 
   <section id="v-key" class="card hidden">
@@ -46,7 +46,7 @@
     <div id="list"></div>
 
     <details class="card" id="add-card">
-      <summary style="cursor:pointer;font-weight:700">+ Add someone yourself</summary>
+      <summary style="cursor:pointer;font-weight:700"><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#plus"/></svg></span>Add someone yourself</summary>
       <p class="dim">For people with no phone. Goes straight to Approved for tonight.</p>
       <form id="f-add">
         <label for="a-name">Name</label>
@@ -59,7 +59,7 @@
     </details>
 
     <details class="card" id="info-card">
-      <summary style="cursor:pointer;font-weight:700">🏪 Cafe info <span class="dim small">(shows in the app)</span></summary>
+      <summary style="cursor:pointer;font-weight:700"><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#store"/></svg></span>Cafe info <span class="dim small">(shows in the app)</span></summary>
       <p class="dim">What customers see on the app's Home and Cafe tabs. Leave a box empty to hide it.</p>
       <form id="f-info">
         <label for="i-rates">Rates <span class="small">(one per line, like ₱15 = 1 hour)</span></label>
@@ -73,8 +73,6 @@
         <input id="i-map" maxlength="400" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Maps app → your shop → Share → Copy link">
         <label for="i-fb">Facebook page link</label>
         <input id="i-fb" maxlength="400" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="facebook.com/yourpage">
-        <label for="i-phone">Phone number</label>
-        <input id="i-phone" maxlength="30" inputmode="tel" placeholder="e.g. 0917 123 4567">
         <div class="err" id="i-err"></div>
         <button class="btn-main" type="submit">SAVE CAFE INFO</button>
         <div class="hint" style="text-align:center"><a href="./#cafe" target="_blank" rel="noopener" style="color:var(--dim)">See it in the app</a></div>
@@ -82,7 +80,7 @@
     </details>
 
     <details class="card" id="names-card">
-      <summary style="cursor:pointer;font-weight:700">👤 Cafe usernames <span class="dim small" id="u-count"></span></summary>
+      <summary style="cursor:pointer;font-weight:700"><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#user"/></svg></span>Cafe usernames <span class="dim small" id="u-count"></span></summary>
       <p class="dim" id="u-manual">Customers can only request with a username on this list. When you make a new account at the counter, add it here.</p>
       <p class="dim hidden" id="u-sync" style="color:var(--ok)"></p>
       <form id="f-uadd">
@@ -97,7 +95,7 @@
     </details>
   </section>
   <p class="err" id="g-err" style="text-align:center"></p>
-  <div class="foot"><button class="link hidden" id="install">📲 Add the owner page to your home screen</button></div>
+  <div class="foot"><button class="link hidden" id="install"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#download"/></svg>Add the owner page to your home screen</button></div>
 </main>
 <script type="module" src="js/owner.js"></script>
 </body>

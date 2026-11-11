@@ -1,6 +1,6 @@
 // NETPIX Goa shell (GOA_PLAN.md G1): bottom tabs + the Home and Cafe tabs. The Overnight tab is app.js, unchanged.
 // Home/Cafe need no registration; only Overnight asks for a name + username.
-import { API, call, $, esc } from './api.js';
+import { API, call, $, esc, ic } from './api.js';
 
 const TABS = ['home', 'overnight', 'account', 'cafe'];
 let home = null;          // last /api/home
@@ -60,11 +60,10 @@ function ratesHtml(text) {
   }).join('');
 }
 const mapUrl = i => i.map || (i.address ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('NETPIX ' + i.address) : '');
-function telHref(p) { return 'tel:' + p.replace(/[^\d+]/g, ''); }
 // One button markup for Home's quick row and the Cafe tab's contact row. External links open outside the app.
 function linkBtn(icon, label, href) {
   const ext = /^https:/.test(href) ? ' target="_blank" rel="noopener"' : '';
-  return `<a class="qbtn" href="${esc(href)}"${ext}><span>${icon}</span>${esc(label)}</a>`;
+  return `<a class="qbtn" href="${esc(href)}"${ext}>${ic(icon)}${esc(label)}</a>`;
 }
 
 function paintInfo() {
@@ -74,11 +73,10 @@ function paintInfo() {
   $('#h-rates').classList.toggle('hidden', !i.rates);
   $('#h-rates-list').innerHTML = ratesHtml(i.rates);
   $('#h-hours').classList.toggle('hidden', !i.hours);
-  $('#h-hours').textContent = i.hours ? '🕐 ' + i.hours : '';
+  $('#h-hours').innerHTML = i.hours ? ic('clock') + esc(i.hours) : '';
   const quick = [];
-  if (mapUrl(i)) quick.push(linkBtn('📍', 'Directions', mapUrl(i)));
-  if (i.facebook) quick.push(linkBtn('💬', 'Message us', i.facebook));
-  if (i.phone) quick.push(linkBtn('📞', 'Call', telHref(i.phone)));
+  if (mapUrl(i)) quick.push(linkBtn('pin', 'Directions', mapUrl(i)));
+  if (i.facebook) quick.push(linkBtn('chat', 'Message us', i.facebook));
   $('#h-quick').innerHTML = quick.join('');
   $('#h-quick').classList.toggle('hidden', !quick.length);
   // Cafe tab
@@ -91,8 +89,7 @@ function paintInfo() {
   $('#c-address').classList.toggle('hidden', !i.address);
   $('#c-map').href = mapUrl(i) || '#';
   const contact = [];
-  if (i.facebook) contact.push(linkBtn('💬', 'Facebook page', i.facebook));
-  if (i.phone) contact.push(linkBtn('📞', i.phone, telHref(i.phone)));
+  if (i.facebook) contact.push(linkBtn('chat', 'Facebook page', i.facebook));
   $('#c-contact-list').innerHTML = contact.join('');
   $('#c-contact').classList.toggle('hidden', !contact.length);
   $('#c-empty').classList.toggle('hidden', !!(i.rates || i.hours || i.address || i.map || contact.length || (home.games || []).length));
@@ -114,14 +111,15 @@ function paintLive() {
   if (s) {
     $('#h-seats').classList.toggle('full', s.free === 0);
     $('#h-free').textContent = s.free === 0 ? 'Full' : s.free;
+    $('#h-meter').style.width = (s.total ? Math.round(100 * s.free / s.total) : 0) + '%';   // the green part = free PCs
     $('#h-of').textContent = s.free === 0 ? ' right now, every PC is in use' : ` of ${s.total} PCs free right now`;
     $('#h-seats-sub').textContent = [s.inUse ? `${s.inUse} in use` : '', s.oos ? `${s.oos} under repair` : '', 'updated ' + agoMs(s.at)].filter(Boolean).join(' · ');
   }
   const news = home.news || [];
-  $('#h-news').innerHTML = news.length ? `<h3 class="sec">📢 News &amp; promos</h3>` + news.map(n => `
+  $('#h-news').innerHTML = news.length ? `<h3 class="sec">${ic('news')}News &amp; promos</h3>` + news.map(n => `
     <article class="card post">
       ${n.image ? `<img src="${API}/api/img/${esc(n.image)}" alt="" loading="lazy">` : ''}
-      <div class="post-top"><h2>${n.pinned ? '📌 ' : ''}${esc(n.title)}</h2><span class="dim small">${esc(shortDate(n.createdAt))}</span></div>
+      <div class="post-top"><h2>${n.pinned ? '<span class="pin">PINNED</span>' : ''}${esc(n.title)}</h2><span class="dim small">${esc(shortDate(n.createdAt))}</span></div>
       ${n.body ? `<p class="post-body">${esc(n.body)}</p>` : ''}
     </article>`).join('') : '';
   for (const img of document.querySelectorAll('#h-news img')) img.addEventListener('error', () => img.remove());   // no inline handlers (CSP)

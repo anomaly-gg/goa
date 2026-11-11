@@ -16,7 +16,7 @@
 <main>
   <header class="brand">
     <img class="logo" src="icons/wordmark.png" alt="NETPIX Gaming Hub" width="960" height="326">
-    <div class="sub">📍 Goa</div>
+    <div class="sub"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#pin"/></svg>Goa</div>
   </header>
 
   <!-- ================= HOME ================= -->
@@ -25,18 +25,19 @@
     <section class="card live hidden" id="h-seats">
       <div class="live-top"><span class="dot"></span>LIVE AT THE CAFE</div>
       <div class="live-n"><b id="h-free"></b><span id="h-of"></span></div>
+      <div class="meter"><i id="h-meter"></i></div>
       <p class="dim" id="h-seats-sub"></p>
     </section>
-    <a class="card acctline hidden" id="h-acct" href="#account"><span id="h-acct-icon"></span><span id="h-acct-text"></span><span class="chev">›</span></a>
+    <a class="card acctline hidden" id="h-acct" href="#account"><span id="h-acct-icon" class="sdot"></span><span id="h-acct-text"></span><span class="chev"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#chev"/></svg></span></a>
     <section class="card mini" id="h-night">
-      <div class="mini-top"><h2>🌙 Overnight tonight</h2><span class="pill" id="h-night-pill"></span></div>
+      <div class="mini-top"><h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#moon"/></svg></span>Overnight tonight</h2><span class="pill" id="h-night-pill"></span></div>
       <p class="dim" id="h-night-sub"></p>
       <a class="btn-main as-btn" href="#overnight" id="h-night-btn">REQUEST OVERNIGHT</a>
     </section>
     <section class="card hidden" id="h-rates">
-      <div class="mini-top"><h2>💸 Rates</h2><a class="link" href="#cafe">More info</a></div>
+      <div class="mini-top"><h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#cash"/></svg></span>Rates</h2><a class="link" href="#cafe">More info</a></div>
       <div class="rates" id="h-rates-list"></div>
-      <p class="dim hidden" id="h-hours"></p>
+      <p class="dim hoursline hidden" id="h-hours"></p>
     </section>
     <div class="quick hidden" id="h-quick"></div>
     <div id="h-news"></div>
@@ -109,7 +110,7 @@
 
   <!-- overnight rules (always shown except while editing details) -->
   <section id="rules" class="card rules">
-    <h2>📋 Overnight rules</h2>
+    <h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#list"/></svg></span>Overnight rules</h2>
     <h3>Getting overnight</h3>
     <ul>
       <li>You need the owner's approval. No walk-in overnight after 10 PM.</li>
@@ -132,7 +133,7 @@
   <div id="t-account" class="tab hidden">
     <div class="note hidden" id="a-flash"></div>
     <section class="card" id="a-setup">
-      <h2>👤 Your account</h2>
+      <h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#user"/></svg></span>Your account</h2>
       <p class="dim">See if your cafe account is logged in somewhere, and lock it right away if it isn&rsquo;t you.</p>
       <ol class="steps">
         <li>Log in at any PC in the cafe.</li>
@@ -157,12 +158,12 @@
         <p class="dim small" id="a-checked" style="margin-top:12px"></p>
       </section>
       <section class="card hidden" data-push-card>
-        <h2>🔔 Alerts on this phone</h2>
+        <h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#bell"/></svg></span>Alerts on this phone</h2>
         <p class="dim" data-push-text></p>
         <button class="btn-main hidden" type="button" data-push-btn></button>
       </section>
       <section class="card">
-        <h2>📱 Phones linked to this account</h2>
+        <h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#device"/></svg></span>Phones linked to this account</h2>
         <div id="a-phones"></div>
         <p class="hint">Don&rsquo;t recognise one? Change your password at the counter.</p>
         <div class="foot"><button class="link" id="a-unlink" type="button">Unlink this phone</button></div>
@@ -173,24 +174,24 @@
 
   <!-- ================= CAFE INFO (owner edits it on the owner page) ================= -->
   <div id="t-cafe" class="tab hidden">
-    <section class="card hidden" id="c-rates"><h2>💸 Rates</h2><div class="rates" id="c-rates-list"></div></section>
-    <section class="card hidden" id="c-hours"><h2>🕐 Open</h2><p id="c-hours-text"></p></section>
-    <section class="card hidden" id="c-where"><h2>📍 Where we are</h2><p id="c-address"></p>
+    <section class="card hidden" id="c-rates"><h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#cash"/></svg></span>Rates</h2><div class="rates" id="c-rates-list"></div></section>
+    <section class="card hidden" id="c-hours"><h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#clock"/></svg></span>Open</h2><p id="c-hours-text"></p></section>
+    <section class="card hidden" id="c-where"><h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#pin"/></svg></span>Where we are</h2><p id="c-address"></p>
       <a class="btn-main as-btn" id="c-map" target="_blank" rel="noopener">GET DIRECTIONS</a></section>
-    <section class="card hidden" id="c-games"><h2>🎮 Games &amp; apps <span class="dim small" id="c-games-n"></span></h2>
-      <input id="c-games-q" type="search" autocomplete="off" placeholder="Search a game" style="margin-top:8px">
+    <section class="card hidden" id="c-games"><h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#game"/></svg></span>Games &amp; apps <span class="dim small" id="c-games-n"></span></h2>
+      <input id="c-games-q" type="search" autocomplete="off" placeholder="Search a game">
       <div id="c-games-list"></div></section>
-    <section class="card hidden" id="c-contact"><h2>💬 Contact</h2><div class="quick" id="c-contact-list"></div></section>
+    <section class="card hidden" id="c-contact"><h2><span class="hico"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#chat"/></svg></span>Contact</h2><div class="quick" id="c-contact-list"></div></section>
     <div class="empty hidden" id="c-empty">Cafe info is coming soon.</div>
     <p class="err" id="c-err" style="text-align:center"></p>
   </div>
-  <div class="foot"><button class="link hidden" id="install">📲 Add NETPIX to your home screen</button></div>
+  <div class="foot"><button class="link hidden" id="install"><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#download"/></svg>Add NETPIX to your home screen</button></div>
 </main>
 <nav class="tabbar" id="tabbar">
-  <a href="#" data-tab="home"><span>🏠</span>Home</a>
-  <a href="#overnight" data-tab="overnight"><span>🌙</span>Overnight</a>
-  <a href="#account" data-tab="account"><span>👤</span>Account</a>
-  <a href="#cafe" data-tab="cafe"><span>ℹ️</span>Cafe</a>
+  <a href="#" data-tab="home"><span><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#home"/></svg></span>Home</a>
+  <a href="#overnight" data-tab="overnight"><span><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#moon"/></svg></span>Overnight</a>
+  <a href="#account" data-tab="account"><span><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#user"/></svg></span>Account</a>
+  <a href="#cafe" data-tab="cafe"><span><svg class="ic" aria-hidden="true"><use href="icons/sprite.svg#store"/></svg></span>Cafe</a>
 </nav>
 <script type="module" src="js/app.js"></script>
 <script type="module" src="js/hub.js"></script>

@@ -1,7 +1,7 @@
 // Account tab (GOA_PLAN.md G3): "is my account logged in somewhere?" + "This isn't me".
 // A phone sees this ONLY after being linked from a seat the account is logged in on (the seat's "📱 Phone app" QR opens
 // this page with #link=CODE; the code can also be typed). Same phone token as the overnight request (cr_token).
-import { call, $, esc } from './api.js';
+import { call, $, esc, ic } from './api.js';
 
 const TOKEN_KEY = 'cr_token', FLASH_KEY = 'cr_link_flash';
 const tok = () => { try { return localStorage.getItem(TOKEN_KEY) || ''; } catch { return ''; } };
@@ -89,15 +89,15 @@ function render() {
   card.className = 'card status acct-' + st.state;
   $('#a-user').textContent = acc.username;
   if (st.state === 'online') {
-    $('#a-icon').textContent = '🟠';
+    $('#a-icon').innerHTML = ic('pc');
     $('#a-title').textContent = `Logged in on ${st.pc}`;
     $('#a-sub').textContent = [st.since ? 'since ' + timeOf(st.since) : '', st.sessionState === 'expired' ? 'out of time' : '', st.more ? `+${st.more} more PC` : ''].filter(Boolean).join(' · ');
   } else if (st.state === 'offline') {
-    $('#a-icon').textContent = '🟢';
+    $('#a-icon').innerHTML = ic('check');
     $('#a-title').textContent = 'Not logged in anywhere';
     $('#a-sub').textContent = 'If that changes and it isn’t you, you’ll see it here.';
   } else {
-    $('#a-icon').textContent = '⚪';
+    $('#a-icon').innerHTML = ic('help');
     $('#a-title').textContent = 'Can’t check right now';
     $('#a-sub').textContent = 'The cafe’s computer hasn’t checked in for a few minutes. Try again soon.';
   }
@@ -114,7 +114,7 @@ function render() {
 
   $('#a-phones').innerHTML = acc.phones.map(p => {
     const fresh = !p.me && Date.now() - p.created < 48 * 3600e3;
-    return `<div class="phone${fresh ? ' new' : ''}"><span>📱 ${p.me ? '<b>This phone</b>' : 'Another phone'}</span>
+    return `<div class="phone${fresh ? ' new' : ''}"><span>${ic('device')}${p.me ? '<b>This phone</b>' : 'Another phone'}</span>
             <span class="dim small">linked ${esc(dayTime(p.created))}${fresh ? ' <span class="pill pending">NEW</span>' : ''}</span></div>`;
   }).join('');
 }
@@ -128,7 +128,7 @@ function paintHome() {
   box.classList.toggle('warnline', st.state === 'online');
   $('#h-acct-text').textContent = st.state === 'online' ? `Your account (${acc.username}) is logged in on ${st.pc}`
     : st.state === 'offline' ? `Your account (${acc.username}) isn’t logged in anywhere` : `Your account (${acc.username}): can’t check right now`;
-  $('#h-acct-icon').textContent = st.state === 'online' ? '🟠' : st.state === 'offline' ? '🟢' : '⚪';
+  $('#h-acct-icon').className = 'sdot ' + st.state;
 }
 
 $('#a-notme').onclick = async () => {

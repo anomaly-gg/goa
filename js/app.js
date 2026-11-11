@@ -1,5 +1,5 @@
 // Customer page: register once -> request overnight -> watch the answer.
-import { call, $, esc } from './api.js';
+import { call, $, esc, ic } from './api.js';
 import './pwa.js';
 import { attachCheck } from './usercheck.js';
 
@@ -38,23 +38,23 @@ function render() {
 
   const r = st.request;
   const active = r && (r.status === 'pending' || r.status === 'approved' || r.status === 'declined');
-  if (st.blocked) return status('🚫', 'Requests are off', 'Message the owner if you think this is a mistake.', null);
+  if (st.blocked) return status('block', 'Requests are off', 'Message the owner if you think this is a mistake.', null);
   if (active) return status(...statusText(r), r);
-  if (!st.open) return status('🔒', 'Requests are closed for tonight', `Overnight requests close at ${st.closesAt}. You can request again from ${st.opensAt}.`, null);
-  if (!st.canRequest) return status('🌙', "You've used tonight's requests", 'Message the owner, or try again tomorrow.', null);
+  if (!st.open) return status('lock', 'Requests are closed for tonight', `Overnight requests close at ${st.closesAt}. You can request again from ${st.opensAt}.`, null);
+  if (!st.canRequest) return status('moon', "You've used tonight's requests", 'Message the owner, or try again tomorrow.', null);
   showForm();
 }
 
 function statusText(r) {
-  if (r.status === 'pending')  return ['⏳', 'Waiting for the owner', 'This page updates by itself. You can close it and check back later.'];
-  if (r.status === 'approved') return ['✅', "You're on tonight's overnight list", `Approved for ${st.nightLabel}. Log in at the cafe as usual. Leaving during curfew ends your overnight — you can't log back in until curfew is over.`];
-  return ['❌', 'Not approved tonight', 'You can request again tomorrow.'];
+  if (r.status === 'pending')  return ['clock', 'Waiting for the owner', 'This page updates by itself. You can close it and check back later.'];
+  if (r.status === 'approved') return ['check', "You're on tonight's overnight list", `Approved for ${st.nightLabel}. Log in at the cafe as usual. Leaving during curfew ends your overnight — you can't log back in until curfew is over.`];
+  return ['x', 'Not approved tonight', 'You can request again tomorrow.'];
 }
 
 function status(icon, title, sub, r) {
   const cls = r ? r.status : '';
   $('#v-status').className = 'card status ' + cls;
-  $('#s-icon').textContent = icon;
+  $('#s-icon').innerHTML = ic(icon);
   $('#s-title').textContent = title;
   $('#s-sub').textContent = sub;
   const note = r && r.note;
